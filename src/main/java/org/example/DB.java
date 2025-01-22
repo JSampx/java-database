@@ -1,11 +1,9 @@
 package org.example;
 
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 import java.io.FileInputStream;
-import java.sql.Connection;
 
 
 public class DB {
@@ -18,7 +16,7 @@ public class DB {
                 String url = props.getProperty("url_db");
                 conn = DriverManager.getConnection(url, props);
             } catch (SQLException e){
-                throw new SQLException(e.getMessage());
+                throw new DbException(e.getMessage());
             }
         }
         return conn;
@@ -29,7 +27,7 @@ public class DB {
             try {
                 conn.close();
             }catch (SQLException e){
-                throw new SQLException(e.getMessage());
+                throw new DbException(e.getMessage());
             }
         }
     }
@@ -40,7 +38,27 @@ public class DB {
             props.load(fs);
             return props;
         } catch (IOException e) {
-            throw new IOException(e.getMessage());
+            throw new DbException(e.getMessage());
+        }
+    }
+
+    public static void closeStatement(Statement st) throws SQLException {
+        if (st != null){
+            try {
+                st.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void closeResultSet(ResultSet rs) throws SQLException {
+        if (rs != null){
+            try {
+                rs.close();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
         }
     }
 }
