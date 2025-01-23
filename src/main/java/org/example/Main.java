@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.db.DB;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;

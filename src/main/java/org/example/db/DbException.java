@@ -1,4 +1,4 @@
-package org.example;
+package org.example.db;
 
 
 public class DbException extends RuntimeException {
